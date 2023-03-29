@@ -89,20 +89,26 @@ with graphs:
     
     #execute the function to know the skills
     cand_skills = one_list(cand, keyword = keyword, exp =exp_range)
-    
-    top = cand_skills.sort_values(by='count', ascending=False).head(1).reset_index()
-
-
-    st.subheader('{} is the most popular skills among hired {} candidates'.format(top.skill[0], keyword))
-
     num_cand = filted.shape[0]
+    cand_skills['Share of candidates'] = cand_skills['count']*1./num_cand
+
+    top = cand_skills.sort_values(by='count', ascending=False).head(1).reset_index()
+    pct = round(top['Share of candidates'][0]*100,0)
+
+    if keyword:
+        cat = keyword
+    else:
+        cat = 'all hired'
+
+    st.subheader('{} is the most popular skill among {} candidates. {}% mentioned it.'.format(top.skill[0], cat, pct))
+
     st.markdown('Candidates in selection: {}'.format(num_cand))
     
 
-    fig = px.bar(cand_skills, x="count", y="skill", orientation='h', labels={"skill": "Top Skills", 'count':'Candidates with the skill'},)
+    fig = px.bar(cand_skills, x="Share of candidates", y="skill", orientation='h', labels={"skill": "Top Skills", 'Share of candidates':'Share of candidates with the skill'},)
 
     fig.update_yaxes(tickfont=dict(size=12))
-    fig.update_xaxes(tickfont=dict(size=10))
+    fig.update_xaxes(tickfont=dict(size=12))
     fig.update_layout(height=5000)
 
     st.plotly_chart(fig)
