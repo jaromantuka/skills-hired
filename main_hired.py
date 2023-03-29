@@ -71,7 +71,7 @@ with data_and_selection:
         flat_list =[]
         for skill in flat_listt: 
             skill = skill.strip()
-            if skill != keyword.lower():
+            if skill.lower() != keyword.lower():
                 flat_list.append(skill)
         myDict = Counter(flat_list)
 
