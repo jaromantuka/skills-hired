@@ -4,6 +4,7 @@ import numpy as np
 from collections import Counter
 import plotly.express as px
 import math
+import webbrowser
 
 def wide(): 
     st.set_page_config(layout="wide")
@@ -26,6 +27,11 @@ with header:
     st.title('Salary and Skills of Hired Candidates') #Most Popular Skills Among
     st.markdown('We analyzed data from the profiles of **12K candidates** who were hired on Djinni since March 2022. \
          Select a category and experience below to see the key skills and salaries these candidates have listed in their profiles.' )
+
+    url = 'https://djinni.co/hire'
+    btn = st.button('Find a job on Djinni :genie:')
+    if btn:
+        webbrowser.open_new_tab(url)
 
 with data_and_selection: 
     st.subheader('Choose the category and experience')
